@@ -7,6 +7,7 @@ import { useState } from 'react';
 import CustomInput from '@/components/CustomInput';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
+import { signIn, signUp } from '@/lib/actions/user.actions';
 import { authFormSchema } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
@@ -36,18 +37,17 @@ const AuthForm = ({ type }: { type: string }) => {
 
     try {
       if (type == 'sign-up') {
-        // const newUser = await signUp(data);
-        // setUser(newUser);
+        const newUser = await signUp(data);
+        setUser(newUser);
       }
 
       if (type == 'sign-in') {
-        // const response = await signIn({
-        //   email: data.email,
-        //   password: data.password,
-        // });
-        // if (response) {
-        //   router.push('/')
-        // }
+        const response = await signIn({
+          email: data.email,
+          password: data.password,
+        });
+
+        if (response) router.push('/');
       }
     } catch (error) {
       console.log(error);

@@ -1,5 +1,6 @@
 'use client';
 
+import Footer from '@/components/Footer';
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { sidebarLinks } from '@/constants';
 import { cn } from '@/lib/utils';
@@ -53,7 +54,8 @@ const MobileNav = ({ user }: MobileNavProps) => {
                 USER
               </nav>
             </SheetClose>
-            FOOTER
+
+            <Footer user={user} type="mobile" />
           </div>
         </SheetContent>
       </Sheet>
