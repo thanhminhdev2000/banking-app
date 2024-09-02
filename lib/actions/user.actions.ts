@@ -54,8 +54,6 @@ export const getLoggedInUser = async () => {
     const { account } = await createSessionClient();
     const user = await account.get();
 
-    console.log('account', account);
-
     return parseStringify(user);
   } catch (error) {
     console.log(error);

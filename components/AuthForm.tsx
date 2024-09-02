@@ -13,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { z } from 'zod';
 
 const AuthForm = ({ type }: { type: string }) => {
@@ -37,8 +38,13 @@ const AuthForm = ({ type }: { type: string }) => {
 
     try {
       if (type == 'sign-up') {
-        const newUser = await signUp(data);
-        setUser(newUser);
+        const response = await signUp(data);
+
+        if (response) {
+          setUser(response);
+        } else {
+          toast.error('E-mail is already exists');
+        }
       }
 
       if (type == 'sign-in') {
@@ -47,9 +53,15 @@ const AuthForm = ({ type }: { type: string }) => {
           password: data.password,
         });
 
-        if (response) router.push('/');
+        if (response) {
+          router.push('/');
+        } else {
+          form.setError('email', {
+            message: 'Invalid email or password',
+          });
+        }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
     } finally {
       setIsLoading(false);
